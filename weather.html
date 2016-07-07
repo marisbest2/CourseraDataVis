@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather Data Visualizations</title>
+	<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+
+</head>
+<body>
+<div id="charts">
+	<div class="big-area"></div>
+</div>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="weather.js"></script>
+
+</body>
+</html>
