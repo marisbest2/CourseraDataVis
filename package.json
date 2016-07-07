@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/marisbest2/CourseraDataVis/issues"
   },
-  "homepage": "https://github.com/marisbest2/CourseraDataVis#readme"
+  "homepage": "https://github.com/marisbest2/CourseraDataVis#readme",
+  "dependencies": {
+    "csv": "^1.1.0",
+    "d3": "^4.1.0",
+    "lodash": "^4.13.1"
+  }
 }
