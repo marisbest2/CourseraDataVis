@@ -2,106 +2,13 @@
 <html>
 <head>
 	<title>Weather Data Visualizations</title>
-	<style>
+<link rel="stylesheet" type="text/css" href="/weather.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-body {
-  font: 10px sans-serif;
-}
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 3.5px;
-}
-
-.bar {
-  fill: steelblue;
-}
-
-.bar.min-bar {
-  fill: red;
-}
-
-.zero {
-	stroke-width: 1.5px;
-	stroke-dasharray: 5 ;
-	stroke: yellow;
-}
-
-svg {
-    font: 10px sans-serif;
-}
-.grid .tick {
-    stroke: green;
-    opacity: 0.7;
-}
-.grid path {
-    stroke-width: 0;
-}
-
-.y.axis line, .y.axis path {
-    fill: none;
-    stroke: green;
-}
-
-.chart-title {
-	font-size: 16px;
-	text-decoration: underline;
-
-}
-
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
-}
-
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
-
-/* Style northward tooltips differently */
-.d3-tip.n:after {
-  content: "\25BC";
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-  text-align: center;
-}
-
-/* Style southward tooltips differently */
-.d3-tip.s:after {
-  content: "\25B2";
-  margin: 0 0 10px 0;
-  top: -8px;
-  left: 0;
-  text-align: center;
-}
-
-</style>
 
 </head>
 <body>
@@ -112,6 +19,9 @@ svg {
 
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script type="text/javascript" src="weather.js"></script>
