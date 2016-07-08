@@ -22,8 +22,23 @@ body {
 .line {
   fill: none;
   stroke: steelblue;
-  stroke-width: 1.5px;
+  stroke-width: 3.5px;
 }
+
+.bar {
+  fill: steelblue;
+}
+
+.bar.min-bar {
+  fill: red;
+}
+
+.zero {
+	stroke-width: 1.5px;
+	stroke-dasharray: 5 ;
+
+}
+
 
 </style>
 
@@ -31,6 +46,9 @@ body {
 <body>
 <div id="charts">
 	<div class="big-area"></div>
+	<div class="region-max"></div>
+	<div class="region-2"></div>
+
 </div>
 
 <script src="//d3js.org/d3.v3.min.js"></script>
