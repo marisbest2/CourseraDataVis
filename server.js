@@ -12,8 +12,10 @@ app.use(logger('dev'));
 app.use(express.static(__dirname)); 
 // app.get('*', (req, res) => res.render(path.join(__dirname,"weather.html")))
 
-app.get('/', (request, response) => response.render('pages/weather.html'););
+app.get('/', (request, response) => response.render('weather.html'));
 
 // Fire it up!
-app.listen(3000);
-console.log('Listening on port 3000');
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+
