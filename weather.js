@@ -1,4 +1,4 @@
-const margin = {top: 20, right: 50, bottom: 30, left: 50},
+const margin = {top: 40, right: 50, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -7,7 +7,7 @@ const margin = {top: 20, right: 50, bottom: 30, left: 50},
 
 // makes a line graph based on a specific [key, value] pair
 // text is the text for the y axis
-const lineGraph = (elem) => (depKey,indKeys) => text => {
+const lineGraph = (elem) => title => (depKey,indKeys) => text => {
   const y = d3.scale.linear()
     .range([height, 0]);
 
@@ -99,7 +99,18 @@ const lineGraph = (elem) => (depKey,indKeys) => text => {
       .attr("x", 3)
       .attr("dy", ".35em")
       .text(function(d) { return d.name; });
-    }
+    
+  svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", margin.top / 2)
+        .attr("text-anchor", "middle")  
+        .attr("class", "chart-title")
+        .text(title);
+
+
+  }
+
+
 }
 
 const elems = (d) => {
@@ -110,7 +121,7 @@ const elems = (d) => {
 }
 
 
-const maxMinBarGraph = (elem) => (labels, valuesFn) => text => {
+const maxMinBarGraph = (elem) => title => (labels, valuesFn) => text => {
 
   const chart = elem
     .attr("width", width)
@@ -129,7 +140,7 @@ const maxMinBarGraph = (elem) => (labels, valuesFn) => text => {
   var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-    .ticks(10);
+    .ticks(5);
 
 
   const color = d3.scale.category10();
@@ -150,10 +161,12 @@ const maxMinBarGraph = (elem) => (labels, valuesFn) => text => {
     min = min.map(x => x || 0).map(x => -x)
     max = max.map(x => x || 0)
     x.domain(labels);
-    y.domain([d3.min(min), d3.max(max)]);
+    const r = data.length
+    console.log(r)
+    y.domain([-135, 135]);
 
-    const combo = d3.zip(labels, max, min)
-
+    const combo = d3.zip(labels, max, min, labels.map(_ => 0))
+    console.log(combo)
 
     svg.append("g")
       .attr("class", "x axis")
@@ -170,25 +183,64 @@ const maxMinBarGraph = (elem) => (labels, valuesFn) => text => {
       .style("text-anchor", "end")
       .text("Frequency");
 
+    svg.selectAll("line.horizontalGrid").data(y.ticks(135/5)).enter()
+    .append("line")
+        .attr(
+        {
+            "class":"horizontalGrid",
+            "x1" : 0,
+            "x2" : width,
+            "y1" : function(d){ return y(d);},
+            "y2" : function(d){ return y(d);},
+            "fill" : "none",
+            "shape-rendering" : "crispEdges",
+            "stroke" : "black",
+            "stroke-width" : "1px"
+        });
+
+
+
+
     svg.selectAll(".max-bar")
       .data(combo)
     .enter().append("rect")
       .attr("class", "bar max-bar")
-      .attr("x", function(d) { return x(d[0]); })
+      .attr("x", d => x(d[0]))
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d[1]); })
-      .attr("height", function(d) { return height / 2 - y(d[1]); });
+      .attr("y", d => y(Math.max(0, d[1])))
+      .attr("height", d => Math.abs(y(d[1]) - y(0)))
     
     svg.selectAll(".min-bar")
       .data(combo)
     .enter().append("rect")
       .attr("class", "bar min-bar")
-      .attr("x", function(d) { return x(d[0]); })
+      .attr("x", d => x(d[0]))
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return height/2; })
-      .attr("height", function(d) { return y(d[1]); });
+      .attr("y", d => y(Math.max(0, d[2])))
+      .attr("height", d => Math.abs(y(d[2]) - y(0)))
 
-  };
+    const x2 = d3.scale.linear().range([0, width])
+    x2.domain(labels.map((_, i) => i))
+
+    svg.selectAll(".zero")
+      .data(combo)
+    .enter().append("path")
+      .attr("class", "line zero hello")
+      .attr("d", 
+        d3.svg.line().interpolate("basis")
+        .x((d,i) => x2(i))
+        .y(d => y(0))); 
+
+      svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text(title);
+
+
+  }
 
 }
 
@@ -199,9 +251,21 @@ const regionNames = ["64N-90N","44N-64N","24N-44N","EQU-24N","24S-EQU","44S-24S"
 
 
 // vis 1: Plot global, nhem, shem vs year as continuous
-d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, lineGraph(d3.select(".big-area"))("Year", ["Glob", "NHem", "SHem", "zero"])("Temp"))
-d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, lineGraph(d3.select(".big-area"))("Year", regionNames + ["zero"])("Temp"))
-d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, lineGraph(d3.select(".big-area"))("Year", middleRegions + ["zero"])("Temp"))
+d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, 
+  lineGraph(d3.select(".big-area"))
+  ("Global and Hemispherical Mean Temps")
+  ("Year", ["Glob", "NHem", "SHem", "zero"])
+  ("Temp"))
+d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, 
+  lineGraph(d3.select(".big-area"))
+  ("Regional Mean Temps")
+  ("Year", regionNames + ["zero"])
+  ("Temp"))
+d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, 
+  lineGraph(d3.select(".big-area"))
+  ("Thirds of the world Mean Temps")
+  ("Year", middleRegions + ["zero"])
+  ("Temp"))
 
 // vis 2a: Plot maxTemp in a region
 // vis 2b: Plot maxTemp in a region
@@ -227,7 +291,8 @@ const getMaxMinsTemps = labels => d => { return {
   } 
 }
 
-d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", getMaxMinsTemps(regionNames), lineGraph(d3.select(".big-area"))("year", ["zero", "max", "min"])("Max Temp"))
+d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", getMaxMinsTemps(regionNames), 
+  lineGraph(d3.select(".big-area"))("Max and Min Mean Temps over Time")("year", ["zero", "max", "min"])("Temp"))
 
 
 
@@ -253,10 +318,10 @@ const countOf = (labels, data) => {
   }
 }
 
-d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, maxMinBarGraph(d3.select(".region-max"))
+d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, maxMinBarGraph(d3.select(".region-max"))("# Times region was Max/Min Mean Temp")
       (regionNames, countOf)("#Times Max"))
 
-d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, maxMinBarGraph(d3.select(".region-2"))
+d3.csv("data/ExcelFormattedGISTEMPData2CSV.csv", elems, maxMinBarGraph(d3.select(".region-2"))("# Times region was Max/Min Mean Temp")
       (middleRegions, countOf)("#Times Max"))
 
 
