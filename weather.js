@@ -11,6 +11,15 @@ const margin = {
   height = 500 - margin.top - margin.bottom;
 
 
+function movein(d) {
+  const m = d3.mouse(this)
+  console.log("in: m", m, "d", d)
+}
+function moveout(d) {
+  const m = d3.mouse(this)
+  console.log("out: m", m, "d", d)
+}
+
 
 // starting with d3 selection elem
 // creates a chart with title 
@@ -118,6 +127,11 @@ const lineGraph = (elem) => title => (depKey, indKeys) => text => {
       .attr("class", "chart-title")
       .text(title);
 
+    area.on("mouseover", movein)
+    area.on('mouseout', moveout)
+
+
+
 
   }
 
@@ -135,6 +149,11 @@ const elems = (d) => {
   return d
 }
 
+const tip = (key, name) => d3.tip()
+  .attr('class', 'd3-tip')
+  .offset(d => d[key] <= 0 ? [10, 0] : [-10, 0])
+  .direction(d => d[key] <= 0 ? 's' : 'n')
+  .html(d => "<strong>" + name + ":</strong> <span style='color:red'>" + Math.abs(d[key]) + "</span>")
 
 const maxMinBarGraph = (elem) => title => (labels, valuesFn) => text => {
 
@@ -164,8 +183,12 @@ const maxMinBarGraph = (elem) => title => (labels, valuesFn) => text => {
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    
+  const maxTip = tip(1, "Times Max")
+  const minTip = tip(2, "Times Min")
+  svg.call(maxTip)
+  svg.call(minTip)
 
   return (error, data) => {
     if (error) throw error;
@@ -223,6 +246,9 @@ const maxMinBarGraph = (elem) => title => (labels, valuesFn) => text => {
       .attr("width", x.rangeBand())
       .attr("y", d => y(Math.max(0, d[1])))
       .attr("height", d => Math.abs(y(d[1]) - y(0)))
+      .on('mouseover', maxTip.show)
+      .on('mouseout', maxTip.hide)
+
 
     svg.selectAll(".min-bar")
       .data(combo)
@@ -232,6 +258,9 @@ const maxMinBarGraph = (elem) => title => (labels, valuesFn) => text => {
       .attr("width", x.rangeBand())
       .attr("y", d => y(Math.max(0, d[2])))
       .attr("height", d => Math.abs(y(d[2]) - y(0)))
+      .on('mouseover', minTip.show)
+      .on('mouseout', minTip.hide)
+
 
     const x2 = d3.scale.linear().range([0, width])
     x2.domain(labels.map((_, i) => i))
