@@ -12,7 +12,9 @@ app.use(logger('dev'));
 app.use(express.static(__dirname)); 
 // app.get('*', (req, res) => res.render(path.join(__dirname,"weather.html")))
 
-app.get('/', (request, response) => response.redirect('/weather.html'));
+// app.get('/', (request, response) => response.redirect('/assgn1_weather/weather.html'));
+app.get('/', (request, response) => response.redirect('/assgn2_wikipedia/wikipedia.html'));
+
 
 // Fire it up!
 app.listen(app.get('port'), function() {
