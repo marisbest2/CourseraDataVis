@@ -175,21 +175,12 @@ const nodelinker = () => {
 	function packageImports(nodes) {
 		var map = {},
 			imports = [];
-<<<<<<< HEAD
 
 		// Compute a map from name to node.
 		nodes.forEach(function(d) {
 			map[d.name] = d;
 		});
 
-=======
-
-		// Compute a map from name to node.
-		nodes.forEach(function(d) {
-			map[d.name] = d;
-		});
-
->>>>>>> 60a9a918635e4d04448b0f9ad812219d1f4fa828
 		// For each import, construct a link from the source to target node.
 		nodes.forEach(function(d) {
 			if (d.imports) d.imports.forEach(function(i) {
