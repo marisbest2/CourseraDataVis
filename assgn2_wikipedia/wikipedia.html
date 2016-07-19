@@ -15,17 +15,30 @@
 
 
 <meta charset="utf-8">
-<style>
+<div id="intro">
+	<h2>Connection Analysis for Coursera UIUC Data Visualization course</h2>
+	<h3>Michael Rochlin</h3>
+	<p>The top chart shows Wikipedia connections between presidents of the United States</p>
+	<p>Mousing over a president will show connections with sources in <span class="source-text">green</span> and
+	targets in <span class="source-target">red</span></p>
+	<p>The bottom chart shows connections between sporting events in a different format</p>
+	<p>There are some cool connections, and constrasts. For example, compare the two Bush presidents and see that 
+	W. is usually a source while Bush Sr. is usually a target. Also notice that international sporting events tend to be more highly connected than USA events like the Super Bowl</p>
+</div>
+<svg width="" height="" class="pull-left"></svg>
+ <div id="legend" class="">
+ 	<div class="legend-source legend-el"></div><span>Source</span>
+ 	<div class="legend-target legend-el"></div><span>Target</span>
+ </div>
+</div>
 
 
-</style>
-<svg width="960" height="600"></svg>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script type="text/javascript" src="wikipedia.js"></script>
-
+<script type="text/javascript" src="zoombutton.js"></script>
 </body>
 </html>

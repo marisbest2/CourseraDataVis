@@ -1,9 +1,67 @@
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
+.node {
+  font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  fill: #bbb;
 }
 
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
+.node:hover {
+  fill: #000;
+}
+
+.link {
+  stroke: steelblue;
+  stroke-opacity: .4;
+  fill: none;
+  pointer-events: none;
+}
+
+.node:hover,
+.node--source,
+.node--target {
+  font-weight: 700;
+}
+
+.node--source {
+  fill: #2ca02c;
+}
+
+.node--target {
+  fill: #d62728;
+}
+
+.link--source,
+.link--target {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.link--source {
+  stroke: #d62728;
+}
+
+.link--target {
+  stroke: #2ca02c;
+}
+
+svg {
+	display: block;
+	margin: 0 auto;
+}
+
+.legend {
+	border-color: black;
+	border-width: 2px;
+	border-style: solid;
+}
+div.legend-el {
+	height: 5px;
+	width: 10px;
+	display: inline-block;
+	border: 1px;
+}
+
+.legend-target {
+	background: #2ca02c;
+}
+.legend-source {
+	background: #d62728;
 }
